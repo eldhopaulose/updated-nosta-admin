@@ -4,7 +4,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const OtpVerification = () => {
+const OtpLogin = () => {
     const [otp, setOtp] = useState('');
     const [resendLoading, setResendLoading] = useState(false); // To track loading state
     const navigate = useNavigate();
@@ -107,4 +107,4 @@ const OtpVerification = () => {
     );
 };
 
-export default OtpVerification;
+export default OtpLogin;
