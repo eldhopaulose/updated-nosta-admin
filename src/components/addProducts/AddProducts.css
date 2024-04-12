@@ -1,0 +1,6 @@
+.add-products-container {
+    min-height: 100vh; /* Set minimum height to fill the viewport */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
