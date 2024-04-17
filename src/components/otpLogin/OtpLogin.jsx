@@ -22,23 +22,29 @@ const OtpLogin = () => {
 
     const handleOtpSubmit = async (e) => {
         e.preventDefault();
-
+    
         if (!otp || !email) {
             toast.error('Please fill out all fields');
             return;
         }
-
+    
         try {
-            // Use the API for sign-in verification
             const response = await axios.post('http://localhost:3000/api/admin/signin/verify', { otp, email });
             const data = response.data;
-            console.log(data);
+            
+            // Save email and token to localStorage
+            localStorage.setItem('email', email);
+            localStorage.setItem('token', data.token);
+    
+            console.log("token: ", data.token);
+            // console.log(data.token);
             navigate('/admindashboard');
         } catch (error) {
             console.error('Error:', error.response.data);
             toast.error(error.response.data.error);
         }
     };
+    
 
     const handleResendOTP = async () => {
         if (!email) {

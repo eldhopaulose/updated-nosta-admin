@@ -1,9 +1,22 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Nav from '../nav/nav';
 import TopSelling from '../topSelling/TopSelling';
 
 const Admin = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if email and token exist in localStorage
+    const email = localStorage.getItem('email');
+    const token = localStorage.getItem('token');
+
+    // If email or token is missing, navigate to login page
+    if (!email || !token) {
+      navigate('/adminregister  ');
+    }
+  }, [navigate]);
+
   return (
     <>
       <Nav/>

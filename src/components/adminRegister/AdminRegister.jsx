@@ -83,8 +83,8 @@ const AdminRegister = () => {
                                 </div>
                             </form>
                             <p className="text-center">
-                                <span>Already have an account?</span>
-                                <Link to="/adminLogin">Login instead</Link>
+                                <span>Already have an account? </span>
+                                <Link to="/adminLogin"> Login instead</Link>
                             </p>
                         </div>
                     </div>

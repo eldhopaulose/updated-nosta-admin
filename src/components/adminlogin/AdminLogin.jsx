@@ -28,7 +28,7 @@ const AdminLogin = () => {
             navigate('/otplogin', { state: { email } }); 
         } catch (error) {
             console.error('Error:', error.response.data);
-            toast.error(error.response.data.error); 
+            toast.error(error.response.data.error);     
         }
     };
     

@@ -4,3 +4,33 @@
     align-items: center;
     justify-content: center;
 }
+
+.selected-image img {
+    max-width: 90px; /* Set the maximum width */
+    max-height: 90px; /* Set the maximum height */
+    margin-right: 10px; /* Optional: Add some margin between images */
+}
+
+.selected-image {
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  .selected-image img {
+    max-width: 100px;
+    height: auto;
+  }
+  
+  .delete-button {
+    position: absolute;
+    top: 0px; /* Adjust the top position as needed */
+    right: 0px; /* Adjust the right position as needed */
+    background-color: transparent;
+    border: none;
+    color: black;
+    font-size: 17px; 
+    font-family: sans-serif;
+    cursor: pointer;
+  }
+  

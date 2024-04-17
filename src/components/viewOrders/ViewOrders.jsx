@@ -1,6 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ViewOrders = () => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        // Check if email and token exist in localStorage
+        const email = localStorage.getItem('email');
+        const token = localStorage.getItem('token');
+
+        // If email or token is missing, navigate to login page
+        if (!email || !token) {
+            navigate('/adminregister');
+        }
+    }, [navigate]);
+
     return (
         <div className="container mt-4">
             <div className="row justify-content-center">
