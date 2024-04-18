@@ -53,7 +53,7 @@ const AddProducts = () => {
     };
 
     const handleDeleteImage = (index) => {
-        const updatedImages = [...selectedImages];  
+        const updatedImages = [...selectedImages];
         updatedImages.splice(index, 1);
         setSelectedImages(updatedImages);
     };
@@ -84,10 +84,17 @@ const AddProducts = () => {
             toast.error('All fields must be filled.');
             return;
         }
+
+        // Calculate discounted price
+        const price = parseFloat(formData.productPrice);
+        const discount = parseFloat(formData.productDiscount.replace('%', '')) / 100;
+        const discountedPrice = (price - (price * discount)).toFixed(2);
+
+
         try {
             const formDataToSend = {
                 name: formData.productName,
-                price: formData.productPrice,
+                price: discountedPrice, // Send discounted price instead of original price
                 discount: formData.productDiscount,
                 description: formData.productDescription,
                 category: formData.productCategory,
@@ -95,7 +102,7 @@ const AddProducts = () => {
                 thumbnail: formData.productThumbnail,
                 images: selectedImages // Send selectedImages directly as an array
             };
-    
+
             console.log('Form Data:', formDataToSend);
 
             const response = await fetch('http://localhost:3000/api/admin/product/create', {
@@ -106,8 +113,7 @@ const AddProducts = () => {
                 },
                 body: JSON.stringify(formDataToSend) // Pass the data in the body
             });
-            
-    
+
             if (response.ok) {
                 console.log('Product created successfully');
                 toast.success('Product created successfully');
@@ -120,6 +126,7 @@ const AddProducts = () => {
             toast.error('An error occurred. Please try again.');
         }
     };
+
     return (
         <div className="add-products-container">
             <div className="container main section dashboard">
