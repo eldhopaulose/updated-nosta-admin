@@ -1,36 +1,50 @@
 .add-products-container {
-    min-height: 100vh; /* Set minimum height to fill the viewport */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  min-height: 100vh; /* Set minimum height to fill the viewport */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selected-images-box {
+  border: 1px solid rgb(241, 227, 227); /* Add 1px border around the selected images */
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 15px; 
+  margin-bottom: 15px;
 }
 
 .selected-image img {
-    max-width: 90px; /* Set the maximum width */
-    max-height: 90px; /* Set the maximum height */
-    margin-right: 10px; /* Optional: Add some margin between images */
+  max-width: 90px;
+  max-height: 90px;
+  margin-right: 10px;
 }
 
 .selected-image {
-    position: relative;
-    display: inline-block;
-    margin-right: 10px;
-  }
-  
-  .selected-image img {
-    max-width: 100px;
-    height: auto;
-  }
-  
-  .delete-button {
-    position: absolute;
-    top: 0px; /* Adjust the top position as needed */
-    right: 0px; /* Adjust the right position as needed */
-    background-color: transparent;
-    border: none;
-    color: black;
-    font-size: 17px; 
-    font-family: sans-serif;
-    cursor: pointer;
-  }
-  
+  position: relative;
+  display: inline-block;
+  margin-right: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  width: 90px; 
+}
+
+.selected-image img {
+  max-width: 95px;
+  max-height: 100px;
+  height: auto;
+  display: block; /* Set display to block for better positioning */
+}
+
+.delete-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: transparent;
+  border: none;
+  color: black;
+  font-size: 17px;
+  font-family: sans-serif;
+  cursor: pointer;
+  transform: translate(50%, -50%); /* Center the button */
+  padding: 5px; /* Add padding for better visibility */
+}

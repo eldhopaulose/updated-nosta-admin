@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './AddProducts.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ImageKit from 'imagekit';
 
 const AddProducts = () => {
     const [selectedImages, setSelectedImages] = useState([]);
@@ -17,6 +18,12 @@ const AddProducts = () => {
     });
     const navigate = useNavigate();
 
+    const imagekit = new ImageKit({
+        publicKey: "public_VJ2m1hSm+Sdf+U3VWl5h+u5dSlA=",
+        privateKey: "private_tOVZHHDsn9pznH30E5NlKZHSgw0=",
+        urlEndpoint: "https://ik.imagekit.io/elvin/"
+    });
+
     useEffect(() => {
         const email = localStorage.getItem('email');
         const token = localStorage.getItem('token');
@@ -25,52 +32,82 @@ const AddProducts = () => {
         }
     }, []);
 
-    const handleImageChange = (e) => {
+    const handleImageChange = async (e) => {
         const files = Array.from(e.target.files);
+        // Ensure only a maximum of 5 images can be selected
         if (selectedImages.length + files.length > 5) {
-            toast.error('Maximum 5 images are allowed');
+            toast.error('You can only select up to 5 images.');
             return;
         }
-        setSelectedImages([...selectedImages, ...files]);
+        for (const file of files) {
+            try {
+                const response = await imagekit.upload({
+                    file: file,
+                    fileName: file.name,
+                });
+                setSelectedImages(prevImages => [...prevImages, response.url]);
+            } catch (error) {
+                console.error('Image upload failed:', error);
+            }
+        }
     };
 
     const handleDeleteImage = (index) => {
-        const newImages = [...selectedImages];
-        newImages.splice(index, 1);
-        setSelectedImages(newImages);
+        const updatedImages = [...selectedImages];  
+        updatedImages.splice(index, 1);
+        setSelectedImages(updatedImages);
+    };
+
+
+    const handleThumbnailChange = async (e) => {
+        const file = e.target.files[0];
+        try {
+            const response = await imagekit.upload({
+                file: file,
+                fileName: file.name,
+            });
+            setFormData({ ...formData, productThumbnail: response.url });
+        } catch (error) {
+            console.error('Thumbnail upload failed:', error);
+        }
     };
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
 
-    const handleThumbnailChange = (e) => {
-        setFormData({ ...formData, productThumbnail: e.target.files[0] });
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // Check if any of the form fields are empty
+        const isEmptyField = Object.values(formData).some(value => value === '');
+        if (isEmptyField) {
+            toast.error('All fields must be filled.');
+            return;
+        }
         try {
-            const formDataToSend = new FormData();
-            formDataToSend.append('productName', formData.productName);
-            formDataToSend.append('productPrice', formData.productPrice);
-            formDataToSend.append('productDiscount', formData.productDiscount);
-            formDataToSend.append('productDescription', formData.productDescription);
-            formDataToSend.append('productCategory', formData.productCategory);
-            formDataToSend.append('productShippingCost', formData.productShippingCost);
-            formDataToSend.append('productThumbnail', formData.productThumbnail);
-            selectedImages.forEach((image, index) => {
-                formDataToSend.append(`image${index}`, image);
-            });
+            const formDataToSend = {
+                name: formData.productName,
+                price: formData.productPrice,
+                discount: formData.productDiscount,
+                description: formData.productDescription,
+                category: formData.productCategory,
+                shippingCost: formData.productShippingCost,
+                thumbnail: formData.productThumbnail,
+                images: selectedImages // Send selectedImages directly as an array
+            };
+    
+            console.log('Form Data:', formDataToSend);
 
             const response = await fetch('http://localhost:3000/api/admin/product/create', {
                 method: 'POST',
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 },
-                body: formDataToSend
+                body: JSON.stringify(formDataToSend) // Pass the data in the body
             });
-
+            
+    
             if (response.ok) {
                 console.log('Product created successfully');
                 toast.success('Product created successfully');
@@ -83,7 +120,9 @@ const AddProducts = () => {
             toast.error('An error occurred. Please try again.');
         }
     };
-
+    
+    
+    
     return (
         <div className="add-products-container">
             <div className="container main section dashboard">
@@ -121,14 +160,17 @@ const AddProducts = () => {
                                     <div className="mb-3">
                                         <label htmlFor="productImages" className="form-label">Images</label>
                                         <input type="file" className="form-control" id="productImages" multiple onChange={handleImageChange} />
-                                        <div className="selected-images">
-                                            {selectedImages.map((image, index) => (
-                                                <div key={index} className="selected-image">
-                                                    <img src={URL.createObjectURL(image)} alt={`Selected Image ${index}`} />
-                                                    <button type="button" className="delete-button" onClick={() => handleDeleteImage(index)}>x</button>
-                                                </div>
-                                            ))}
-                                        </div>
+                                        {/* Conditional rendering for selected images container */}
+                                        {selectedImages.length > 0 && (
+                                            <div className="selected-images-box">
+                                                {selectedImages.map((imageUrl, index) => (
+                                                    <div key={index} className="selected-image">
+                                                        <img src={imageUrl} alt={`Selected Image ${index}`} />
+                                                        <button type="button" className="delete-button" onClick={() => handleDeleteImage(index)}>x</button>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
                                         <div className="selected-images-count">
                                             <input type="text" className="form-control" value={`${selectedImages.length} images selected`} readOnly style={{ color: 'red' }} />
                                         </div>
@@ -161,9 +203,9 @@ const AddProducts = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
             <ToastContainer />
-        </div>
+        </div >
     );
 };
 
