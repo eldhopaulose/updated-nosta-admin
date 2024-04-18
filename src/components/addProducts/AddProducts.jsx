@@ -120,9 +120,6 @@ const AddProducts = () => {
             toast.error('An error occurred. Please try again.');
         }
     };
-    
-    
-    
     return (
         <div className="add-products-container">
             <div className="container main section dashboard">

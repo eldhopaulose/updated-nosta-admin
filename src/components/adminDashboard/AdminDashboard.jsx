@@ -13,13 +13,13 @@ const Admin = () => {
 
     // If email or token is missing, navigate to login page
     if (!email || !token) {
-      navigate('/adminregister  ');
+      navigate('/adminregister');
     }
   }, [navigate]);
 
   return (
     <>
-      <Nav/>
+      <Nav />
       <div className="container main section dashboard mt-lg-5 mt-md-5 mt-5">
         <div className="row mt-lg-5 mt-md-5">
           <div className="col-xxl-4 col-md-6 mt-lg-5 mt-md-5 mt-5">
@@ -33,7 +33,7 @@ const Admin = () => {
                     </div>
                     <div className="ps-3">
                       <h6>Add Products </h6>
-                      <span className="text-success small pt-1 fw-bold">click here</span> 
+                      <span className="text-success small pt-1 fw-bold">click here</span>
                     </div>
                   </div>
                 </div>
@@ -57,11 +57,11 @@ const Admin = () => {
                   </div>
                 </div>
               </div>
-            </Link> 
+            </Link>
           </div>
 
           <div className="col-xxl-4 col-xl-12 mt-lg-5 mt-md-5">
-            <Link to="/topSelling" className="card-link"> 
+            <Link to="/topSelling" className="card-link">
               <div className="card info-card customers-card">
                 <div className="card-body">
                   <div className="card-title"></div>
@@ -78,16 +78,15 @@ const Admin = () => {
               </div>
             </Link>
           </div>
-
         </div>
         <div className="col-12 col-lg-12">
           <div className="card top-selling overflow-auto">
+            {/* Content for top selling products */}
           </div>
         </div>
       </div>
 
-      <TopSelling/>
-      
+      <TopSelling />
     </>
   );
 };
