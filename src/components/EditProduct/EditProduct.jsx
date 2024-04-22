@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './AddProducts.css';
+import { useNavigate, useParams } from 'react-router-dom';
+import './editProduct.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ImageKit from 'imagekit';
+import axios from 'axios';
 
-const AddProducts = () => {
+const EditProduct = () => {
+    const { productId } = useParams();
+    const navigate = useNavigate();
+
     const [selectedImages, setSelectedImages] = useState([]);
     const [formData, setFormData] = useState({
         productName: '',
@@ -17,7 +21,6 @@ const AddProducts = () => {
         productShippingCost: '',
         productThumbnail: null
     });
-    const navigate = useNavigate();
 
     const imagekit = new ImageKit({
         publicKey: "public_VJ2m1hSm+Sdf+U3VWl5h+u5dSlA=",
@@ -26,12 +29,34 @@ const AddProducts = () => {
     });
 
     useEffect(() => {
-        const email = localStorage.getItem('email');
-        const token = localStorage.getItem('token');
-        if (!email || !token) {
-            navigate('/adminregister');
-        }
-    }, []);
+        const fetchProductDetails = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3000/api/admin/product/findproduct/${productId}`);
+                if (response.status === 200) {
+                    const productData = response.data;
+                    setFormData({
+                        productName: productData.name,
+                        productOriginalPrice: productData.originalPrice,
+                        productPrice: productData.price,
+                        productDiscount: productData.discount,
+                        productDescription: productData.description,
+                        productCategory: productData.category,
+                        productShippingCost: productData.shippingCost,
+                        productThumbnail: productData.thumbnail
+                    });
+                    setSelectedImages(productData.images);
+                } else {
+                    console.error('Failed to fetch product details:', response.statusText);
+                    toast.error('Failed to fetch product details. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error fetching product details:', error);
+                toast.error('An error occurred while fetching product details. Please try again.');
+            }
+        };
+
+        fetchProductDetails();
+    }, [productId]);
 
     const handleImageChange = async (e) => {
         const files = Array.from(e.target.files);
@@ -57,7 +82,6 @@ const AddProducts = () => {
         updatedImages.splice(index, 1);
         setSelectedImages(updatedImages);
     };
-
 
     const handleThumbnailChange = async (e) => {
         const file = e.target.files[0];
@@ -88,7 +112,6 @@ const AddProducts = () => {
         const discount = parseFloat(formData.productDiscount.replace('%', '')) / 100;
         const discountedPrice = (price - (price * discount)).toFixed(2);
 
-
         try {
             const formDataToSend = {
                 name: formData.productName,
@@ -102,23 +125,19 @@ const AddProducts = () => {
                 originalPrice: formData.productOriginalPrice
             };
 
-            console.log('Form Data:', formDataToSend);
-
-            const response = await fetch('http://localhost:3000/api/admin/product/create', {
-                method: 'POST',
+            const response = await axios.patch(`http://localhost:3000/api/admin/product/updateProduct/${productId}`, formDataToSend, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
-                },
-                body: JSON.stringify(formDataToSend)
+                }
             });
 
-            if (response.ok) {
-                console.log('Product created successfully');
-                toast.success('Product created successfully');
+            if (response.status === 200) {
+                console.log('Product updated successfully');
+                toast.success('Product updated successfully');
             } else {
-                console.error('Failed to create product:', response.statusText);
-                toast.error('Failed to create product. Please try again.');
+                console.error('Failed to update product:', response.statusText);
+                toast.error('Failed to update product. Please try again.');
             }
         } catch (error) {
             console.error('Error:', error);
@@ -133,7 +152,7 @@ const AddProducts = () => {
                     <div className="col-lg-6 mx-auto">
                         <div className="card">
                             <div className="card-body">
-                                <h4 className="add-products-title text-center mb-4">Add Product</h4>
+                                <h4 className="add-products-title text-center mb-4">Edit Product</h4>
                                 <form onSubmit={handleSubmit} encType="multipart/form-data">
                                     <div className="mb-3">
                                         <label htmlFor="productName" className="form-label">Product Name</label>
@@ -163,6 +182,11 @@ const AddProducts = () => {
                                     <div className="mb-3">
                                         <label htmlFor="productThumbnail" className="form-label">Thumbnail</label>
                                         <input type="file" className="form-control" id="productThumbnail" onChange={handleThumbnailChange} />
+                                        {formData.productThumbnail && (
+                                            <div className="thumbnail-container">
+                                                <img src={formData.productThumbnail} alt="Thumbnail Preview" className="thumbnail-preview" />
+                                            </div>
+                                        )}
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="productImages" className="form-label">Images</label>
@@ -171,7 +195,7 @@ const AddProducts = () => {
                                             <div className="selected-images-box">
                                                 {selectedImages.map((imageUrl, index) => (
                                                     <div key={index} className="selected-image">
-                                                        <img src={imageUrl} alt={`Selected Image ${index}`} />
+                                                        <img src={imageUrl} alt={`Selected Image ${index}`} className="thumbnail" />
                                                         <button type="button" className="delete-button" onClick={() => handleDeleteImage(index)}>x</button>
                                                     </div>
                                                 ))}
@@ -202,7 +226,7 @@ const AddProducts = () => {
                                         <input type="number" className="form-control" id="productShippingCost" value={formData.productShippingCost} onChange={handleChange} />
                                     </div>
                                     <div className="text-center">
-                                        <button type="submit" className="btn btn-primary w-100">Submit</button>
+                                        <button type="submit" className="btn btn-primary w-100">Update</button>
                                     </div>
                                 </form>
                             </div>
@@ -215,4 +239,4 @@ const AddProducts = () => {
     );
 };
 
-export default AddProducts;
+export default EditProduct;

@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Nav from '../nav/nav';
-import TopSelling from '../topSelling/TopSelling';
+import EditProductDashboard from '../editProductDashboard/EditProductsDashboard';
+import axios from 'axios'; // Import axios
 
-const Admin = () => {
+const AdminDashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,6 +17,16 @@ const Admin = () => {
       navigate('/adminregister');
     }
   }, [navigate]);
+
+  const handleEditProducts = async () => {
+    try {
+      const response = await axios.get('/api/admin/product/all');
+      navigate('/editProductdashboard', { state: { products: response.data.products } });
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  };
+  
 
   return (
     <>
@@ -61,22 +72,20 @@ const Admin = () => {
           </div>
 
           <div className="col-xxl-4 col-xl-12 mt-lg-5 mt-md-5">
-            <Link to="/topSelling" className="card-link">
-              <div className="card info-card customers-card">
-                <div className="card-body">
-                  <div className="card-title"></div>
-                  <div className="d-flex align-items-center">
-                    <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i className="bi bi-people"></i>
-                    </div>
-                    <div className="ps-3">
-                      <h6>Top Selling Products</h6>
-                      <span className="text-danger small pt-1 fw-bold">click here</span> <span className="text-muted small pt-2 ps-1"></span>
-                    </div>
+            <div className="card info-card customers-card">
+              <div className="card-body">
+                <div className="card-title"></div>
+                <div className="d-flex align-items-center">
+                  <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i className="bi bi-people"></i>
+                  </div>
+                  <div className="ps-3">
+                    <h6>Edit Products</h6>
+                    <button onClick={handleEditProducts} className="btn" style={{ fontSize: '14px', color: 'orange' }}>Click here</button> {/* Inline CSS */}
                   </div>
                 </div>
               </div>
-            </Link>
+            </div>
           </div>
         </div>
         <div className="col-12 col-lg-12">
@@ -86,10 +95,10 @@ const Admin = () => {
         </div>
       </div>
       
-      <TopSelling />
+      <EditProductDashboard />
       
     </>
   );
 };
 
-export default Admin;
+export default AdminDashboard;

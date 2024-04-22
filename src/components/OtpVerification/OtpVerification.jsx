@@ -22,22 +22,29 @@ const OtpVerification = () => {
 
     const handleOtpSubmit = async (e) => {
         e.preventDefault();
-
+    
         if (!otp || !email) {
             toast.error('Please fill out all fields');
             return;
         }
-
+    
         try {
             const response = await axios.post('http://localhost:3000/api/admin/register/verify', { otp, email });
             const data = response.data;
             console.log(data);
+            
+            // Save email and token to localStorage
+            localStorage.setItem('email', email);
+            localStorage.setItem('token', data.token);
+    
+            // Navigate to admin dashboard
             navigate('/admindashboard');
         } catch (error) {
             console.error('Error:', error.response.data);
             toast.error(error.response.data.error);
         }
     };
+    
 
     const handleResendOTP = async () => {
         if (!email) {
