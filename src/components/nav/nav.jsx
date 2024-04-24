@@ -155,12 +155,12 @@ function Nav() {
 
             <li className="nav-item dropdown pe-3">
               <Link className="nav-link nav-profile d-flex align-items-center pe-0" to="/admindashboard" data-bs-toggle="dropdown">
-                <span className="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+                <span className="d-none d-md-block dropdown-toggle ps-2">Settings</span>
               </Link>
 
               <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                 <li className="dropdown-header">
-                  <h6>Kevin Anderson</h6>
+                  <h6>Settings</h6>
                 </li>
                 <li><hr className="dropdown-divider" /></li>
 
