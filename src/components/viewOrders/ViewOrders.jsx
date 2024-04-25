@@ -1,71 +1,69 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './Vieworders.css'; // Import CSS file for styling
 
-const ViewOrders = () => {
-    const navigate = useNavigate();
+const Vieworders = () => {
+    const { productId } = useParams();
+    const [product, setProduct] = useState(null);
 
     useEffect(() => {
-        // Check if email and token exist in localStorage
-        const email = localStorage.getItem('email');
-        const token = localStorage.getItem('token');
+        const fetchProductDetails = async () => {
+            console.log(productId);
+            try {
+                const response = await axios.get(`http://localhost:3000/api/admin/product/findproduct/${productId}`);
+                if (response.status === 200) {
+                    setProduct(response.data);
+                } else {
+                    console.error('Failed to fetch product details:', response.statusText);
+                    toast.error('Failed to fetch product details. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error fetching product details:', error);
+                toast.error('An error occurred while fetching product details. Please try again.');
+            }
+        };
 
-        // If email or token is missing, navigate to login page
-        if (!email || !token) {
-            navigate('/adminregister');
-        }
-    }, [navigate]);
+        fetchProductDetails();
+    }, [productId]);
 
     return (
-        <div className="container mt-4">
-            <div className="row justify-content-center">
-                <div className="col-12 text-center mb-4">
-                    <h2>All Order Details</h2>
+        <div className="container">
+            <h1>Product Details</h1>
+            {product ? (
+                <div className="glass-morphism">
+                    <div className="product-details-box">
+                        <div className="detail-box">
+                            <p><strong>Name:</strong> {product.name}</p>
+                            <p><strong>Price:</strong> {product.price}</p>
+                            <p><strong>Original Price:</strong> {product.originalPrice}</p>
+                            <p><strong>Discount:</strong> {product.discount}</p>
+                            <p><strong>Description:</strong> {product.description}</p>
+                            <p><strong>Category:</strong> {product.category}</p>
+                            <p><strong>Shipping Cost:</strong> {product.shippingCost}</p>
+                        </div>
+                    </div>
+                    <div className="product-media-box">
+                        <div className="detail-box">
+                            <p><strong>Thumbnail:</strong></p>
+                            <img src={product.thumbnail} alt="Thumbnail" className="thumbnail" />
+                        </div>
+                        <div className="image-gallery">
+                            <p><strong>Images:</strong></p>
+                            {product.images.map((image, index) => (
+                                <img key={index} src={image} alt={`Image ${index}`} className="image" />
+                            ))}
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div className="table-responsive">
-                <table className="table table-striped table-fixed">
-                    <thead>
-                        <tr>
-                            <th style={{ width: '10%' }}>Picture</th>
-                            <th style={{ width: '10%' }}>Product</th>
-                            <th style={{ width: '10%' }}>Name</th>
-                            <th style={{ width: '10%' }}>Quantity</th>
-                            <th style={{ width: '10%' }}>Price</th>
-                            <th style={{ width: '10%' }}>p.h Number</th>
-                            <th style={{ width: '15%' }}>Address</th>
-                            <th style={{ width: '10%' }}>Pincode</th>
-                            <th style={{ width: '15%' }}>Purchase Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><img src="picture_url_1" alt="Product 1" style={{ width: '100%', maxWidth: '50px', height: 'auto' }} /></td>
-                            <td>Product 1</td>
-                            <td>ABC Company</td>
-                            <td>5</td>
-                            <td>$10.00</td>
-                            <td>1234567890</td>
-                            <td>parassery house kuriachira p.o thrissurs</td>
-                            <td>12345</td>
-                            <td>2024-04-01</td>
-                        </tr>
-                        <tr>
-                            <td><img src="picture_url_2" alt="Product 2" style={{ width: '100%', maxWidth: '50px', height: 'auto' }} /></td>
-                            <td>Product 2</td>
-                            <td>XYZ Corporation</td>
-                            <td>10</td>
-                            <td>$20.00</td>
-                            <td>9876543210</td>
-                            <td>parassery house kuriachira p.o thrissur</td>
-                            <td>67890</td>
-                            <td>2024-04-02</td>
-                        </tr>
-                        {/* Add more rows here if needed */}
-                    </tbody>
-                </table>
-            </div>
+            ) : (
+                <p>Loading...</p>
+            )}
+            <ToastContainer />
         </div>
     );
 };
 
-export default ViewOrders;
+export default Vieworders;

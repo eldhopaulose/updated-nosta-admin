@@ -84,7 +84,7 @@ const AdminLogin = () => {
                             </form> 
                             <p className="text-center">
                                 <span>Don't have an account?</span>
-                                <Link to="/mailAuthentication"> 
+                                <Link to="/"> 
                                     <span> Sign up instead</span>
                                 </Link>
                             </p>

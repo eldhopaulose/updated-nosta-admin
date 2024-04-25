@@ -53,7 +53,7 @@ const AdminDashboard = () => {
           </div>
 
           <div className="col-xxl-4 col-md-6 mt-lg-5 mt-md-5">
-            <Link to="/viewOrders" className="card-link">
+            <Link to="/viewordersdashboard" className="card-link">
               <div className="card info-card revenue-card">
                 <div className="card-body">
                   <div className="card-title"></div>
