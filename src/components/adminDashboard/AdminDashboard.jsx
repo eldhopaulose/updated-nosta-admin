@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Nav from '../nav/nav';
 import EditProductDashboard from '../editProductDashboard/EditProductsDashboard';
 import axios from 'axios'; // Import axios
+import { BASE_URL } from '../../constants/constants';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -17,15 +18,17 @@ const AdminDashboard = () => {
       navigate('/adminregister');
     }
   }, [navigate]);
+  console.log(BASE_URL);
 
   const handleEditProducts = async () => {
     try {
-      const response = await axios.get('/api/admin/product/all');
+      const response = await axios.get(`${BASE_URL}/admin/product/all`);
       navigate('/editProductdashboard', { state: { products: response.data.products } });
     } catch (error) {
       console.error('Error fetching products:', error);
     }
   };
+  
   
 
   return (

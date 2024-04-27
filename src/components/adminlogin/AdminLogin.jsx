@@ -4,6 +4,8 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import imgggggnosta from '../../assetsNosta/nosta.png';
 import axios from 'axios';
+import { BASE_URL } from '../../constants/constants';
+
 
 const AdminLogin = () => {
     const [email, setEmail] = useState('');
@@ -22,7 +24,7 @@ const AdminLogin = () => {
         }
     
         try {
-            const response = await axios.post('http://localhost:3000/api/admin/signin', { email });
+            const response = await axios.post(`${BASE_URL}/admin/signin`, { email });
             const data = response.data;
             console.log(data);
             navigate('/otplogin', { state: { email } }); 

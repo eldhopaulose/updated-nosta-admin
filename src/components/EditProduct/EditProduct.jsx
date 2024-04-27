@@ -5,6 +5,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ImageKit from 'imagekit';
 import axios from 'axios';
+import { BASE_URL } from '../../constants/constants';
+
 
 const EditProduct = () => {
     const { productId } = useParams();
@@ -31,7 +33,7 @@ const EditProduct = () => {
     useEffect(() => {
         const fetchProductDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/api/admin/product/findproduct/${productId}`);
+                const response = await axios.get(`${BASE_URL}/admin/product/findproduct/${productId}`);
                 if (response.status === 200) {
                     const productData = response.data;
                     setFormData({
@@ -125,7 +127,7 @@ const EditProduct = () => {
                 originalPrice: formData.productOriginalPrice
             };
 
-            const response = await axios.patch(`http://localhost:3000/api/admin/product/updateProduct/${productId}`, formDataToSend, {
+            const response = await axios.patch(`${BASE_URL}/admin/product/updateProduct/${productId}`, formDataToSend, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -144,6 +146,30 @@ const EditProduct = () => {
             toast.error('An error occurred. Please try again.');
         }
     };
+
+    const handleDeleteProduct = async () => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this product?");
+        if (confirmDelete) {
+            try {
+                const response = await axios.delete(`${BASE_URL}/admin/product/deleteproduct/${productId}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+                if (response.status === 200) {
+                    navigate('/admindashboard');
+                } else {
+                    console.error('Failed to delete product:', response.statusText);
+                    toast.error('Failed to delete product. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                toast.error('An error occurred. Please try again.');
+            }
+        }
+    };
+
 
     return (
         <div className="add-products-container">
@@ -169,7 +195,7 @@ const EditProduct = () => {
                                     <div className="mb-3">
                                         <label htmlFor="productDiscount" className="form-label">Discount</label>
                                         <select className="form-select" id="productDiscount" value={formData.productDiscount} onChange={handleChange}>
-                                            <option value="No discount">No discount</option>
+                                            <option value="0%">No discount</option>
                                             <option value="5%">5%</option>
                                             <option value="10%">10%</option>
                                             <option value="15%">15%</option>
@@ -217,8 +243,8 @@ const EditProduct = () => {
                                             <option value="Popcorn">Popcorn</option>
                                             <option value="Dry Fruits">Dry Fruits</option>
                                             <option value="Curry powders">Curry powders</option>
-                                            <option value="spices">Spices</option>
-                                            <option value="kerala Spices">Kerala Spices</option>
+                                            <option value="Spices">Spices</option>
+                                            <option value="Kerala Special">Kerala Special</option>
                                         </select>
                                     </div>
                                     <div className="mb-3">
@@ -227,6 +253,9 @@ const EditProduct = () => {
                                     </div>
                                     <div className="text-center">
                                         <button type="submit" className="btn btn-primary w-100">Update</button>
+                                    </div>
+                                    <div className="delete-buttons-container">
+                                        <button type="submit" className="btn btn-danger w-100 mt-3" onClick={handleDeleteProduct}>Delete Product</button>
                                     </div>
                                 </form>
                             </div>

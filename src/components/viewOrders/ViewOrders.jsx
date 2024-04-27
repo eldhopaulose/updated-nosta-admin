@@ -3,7 +3,9 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './Vieworders.css'; // Import CSS file for styling
+import './Vieworders.css';
+import { BASE_URL } from '../../constants/constants';
+
 
 const Vieworders = () => {
     const { productId } = useParams();
@@ -13,7 +15,7 @@ const Vieworders = () => {
         const fetchProductDetails = async () => {
             console.log(productId);
             try {
-                const response = await axios.get(`http://localhost:3000/api/admin/product/findproduct/${productId}`);
+                const response = await axios.get(`${BASE_URL}/admin/product/findproduct/${productId}`);
                 if (response.status === 200) {
                     setProduct(response.data);
                 } else {

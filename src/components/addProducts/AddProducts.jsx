@@ -4,6 +4,9 @@ import './AddProducts.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ImageKit from 'imagekit';
+import { BASE_URL } from '../../constants/constants';
+
+
 
 const AddProducts = () => {
     const [selectedImages, setSelectedImages] = useState([]);
@@ -104,7 +107,7 @@ const AddProducts = () => {
 
             console.log('Form Data:', formDataToSend);
 
-            const response = await fetch('http://localhost:3000/api/admin/product/create', {
+            const response = await fetch(`${BASE_URL}/admin/product/create`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -150,7 +153,7 @@ const AddProducts = () => {
                                     <div className="mb-3">
                                         <label htmlFor="productDiscount" className="form-label">Discount</label>
                                         <select className="form-select" id="productDiscount" value={formData.productDiscount} onChange={handleChange}>
-                                            <option value="No discount">No discount</option>
+                                            <option value="0%">No discount</option>
                                             <option value="5%">5%</option>
                                             <option value="10%">10%</option>
                                             <option value="15%">15%</option>
@@ -193,7 +196,7 @@ const AddProducts = () => {
                                             <option value="Popcorn">Popcorn</option>
                                             <option value="Dry Fruits">Dry Fruits</option>
                                             <option value="Curry powders">Curry powders</option>
-                                            <option value="spices">Spices</option>
+                                            <option value="Spices">Spices</option>
                                             <option value="kerala Spices">Kerala Spices</option>
                                         </select>
                                     </div>

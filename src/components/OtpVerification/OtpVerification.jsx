@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BASE_URL } from '../../constants/constants';
+
 
 const OtpVerification = () => {
     const [otp, setOtp] = useState('');
@@ -29,7 +31,7 @@ const OtpVerification = () => {
         }
     
         try {
-            const response = await axios.post('http://localhost:3000/api/admin/register/verify', { otp, email });
+            const response = await axios.post(`${BASE_URL}/admin/register/verify`, { otp, email });
             const data = response.data;
             console.log(data);
             

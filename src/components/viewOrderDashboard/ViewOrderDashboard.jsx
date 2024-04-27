@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { BASE_URL } from '../../constants/constants';
+
 
 const ViewOrdersDashboard = () => {
     const navigate = useNavigate();
@@ -24,7 +26,7 @@ const ViewOrdersDashboard = () => {
         // Fetch orders
         const fetchOrders = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/api/order');
+                const response = await axios.get(`${BASE_URL}/order`);
                 setOrders(response.data.orders);
             } catch (error) {
                 console.error('Error fetching orders:', error);
@@ -36,7 +38,7 @@ const ViewOrdersDashboard = () => {
 
     const handleProductClick = (productId) => {
         // Navigate to the vieworder page with the productId as a URL parameter
-        navigate(`/vieworder/${productId}`);
+        navigate(`/vieworders/${productId}`);
     };
 
 

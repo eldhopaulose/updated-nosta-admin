@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { BASE_URL } from '../../constants/constants';
 
 const EditProductDashboard = () => {
     const navigate = useNavigate();
@@ -24,7 +25,7 @@ const EditProductDashboard = () => {
         // Fetch products
         const fetchProducts = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/api/admin/product/all');
+                const response = await axios.get(`${BASE_URL}/admin/product/all`);
                 setProducts(response.data.products);
             } catch (error) {
                 console.error('Error fetching products:', error);
@@ -46,7 +47,7 @@ const EditProductDashboard = () => {
                     <div className="col-xxl-8 col-md-8 col-11 ">
                         <div className="card top-selling overflow-auto">
                             <div className="card-body pb-0">
-                                <h5 className="card-title">All Products</h5>
+                                <h5 className="card-title">Select the product you want to edit</h5>
                                 <table className="table table-borderless table-hover">
                                     <thead>
                                         <tr>
