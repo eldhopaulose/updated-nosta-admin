@@ -58,7 +58,7 @@ const ViewOrdersDashboard = () => {
                                             <th scope="col">Bill Date</th>
                                             <th scope="col">Address</th>
                                             <th scope="col">Phone Number</th>
-                                            <th scope="col">Product IDs</th>
+                                            <th scope="col">Product title</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -67,13 +67,22 @@ const ViewOrdersDashboard = () => {
                                                 <td>{order.orderId}</td>
                                                 <td>{order.items[0].status}</td>
                                                 <td>{new Date(order.items[0].billDate).toLocaleDateString()}</td>
-                                                <td>{order.items[0].address.address}, {order.items[0].address.district}, {order.items[0].address.state}</td>
+                                                <td>{order.items[0].address.name} ,{order.items[0].address.address}, {order.items[0].address.district}, {order.items[0].address.state}</td>
                                                 <td>{order.items[0].address.mobileNumber}</td>
                                                 <td>
                                                     {order.items[0].productId[0].items.map(item => (
-                                                        <span key={item.productId} onClick={() => handleProductClick(item.productId)} style={{ textDecoration: 'underline', cursor: 'pointer' }}>{item.productId}<br /></span>
+                                                        <span key={item.productId._id} onClick={() => handleProductClick(item.productId._id)} style={{ textDecoration: 'underline', cursor: 'pointer' }}>
+                                                            {item.productId.name} (Quantity: {item.quantity})<br />
+
+                                                        </span>
+
+
                                                     ))}
+
+
+
                                                 </td>
+
                                             </tr>
                                         ))}
                                     </tbody>
