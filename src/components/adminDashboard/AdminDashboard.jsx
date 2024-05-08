@@ -28,14 +28,13 @@ const AdminDashboard = () => {
       console.error('Error fetching products:', error);
     }
   };
-  
-  
+
   return (
     <>
       <Nav />
-      <div className="container main section dashboard mt-lg-5 mt-md-5 mt-5">
+      <div className="container w-140 main section dashboard mt-lg-5 mt-md-5 mt-5">
         <div className="row mt-lg-5 mt-md-5">
-          <div className="col-xxl-4 col-md-6 mt-lg-5 mt-md-5 mt-5">
+          <div className="col-xxl-5 col-md-6 mt-lg-5 mt-md-5 mt-5">
             <Link to="/addProducts" className="card-link">
               <div className="card info-card sales-card">
                 <div className="card-body">
@@ -54,7 +53,7 @@ const AdminDashboard = () => {
             </Link>
           </div>
 
-          <div className="col-xxl-4 col-md-6 mt-lg-5 mt-md-5">
+          <div className="col-xxl-5 col-md-6 mt-lg-5 mt-md-5">
             <Link to="/viewordersdashboard" className="card-link">
               <div className="card info-card revenue-card">
                 <div className="card-body">
@@ -73,7 +72,7 @@ const AdminDashboard = () => {
             </Link>
           </div>
 
-          <div className="col-xxl-4 col-xl-12 mt-lg-5 mt-md-5">
+          <div className="col-xxl-5 col-xl-12 mt-lg-5 mt-md-5">
             <div className="card info-card customers-card">
               <div className="card-body">
                 <div className="card-title"></div>
@@ -83,7 +82,7 @@ const AdminDashboard = () => {
                   </div>
                   <div className="ps-3">
                     <h6>Edit Products</h6>
-                    <button onClick={handleEditProducts} className="btn" style={{ fontSize: '14px', color: 'orange' }}>Click here</button> {/* Inline CSS */}
+                    <button onClick={handleEditProducts} className="btn" style={{ fontSize: '14px', color: 'orange' }}>Click here</button>
                   </div>
                 </div>
               </div>
@@ -96,9 +95,8 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
-      
+
       <EditProductDashboard />
-      
     </>
   );
 };

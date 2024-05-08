@@ -48,10 +48,10 @@ const EditProductDashboard = () => {
                         <div className="card top-selling overflow-auto">
                             <div className="card-body pb-0">
                                 <h5 className="card-title">Select the product you want to edit</h5>
-                                <table className="table table-borderless table-hover">
+                                <table className="table table-bordered table-hover"> {/* Added 'table-bordered' class */}
                                     <thead>
                                         <tr>
-                                            <th scope="col">Preview</th>
+                                            <th scope="col">Image</th>
                                             <th scope="col">Product</th>
                                             <th scope="col">Price</th>
                                             <th scope="col">Original Price</th>
