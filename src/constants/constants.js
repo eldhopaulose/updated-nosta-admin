@@ -1,4 +1,6 @@
 
-const  BASE_URL = 'https://nosta-backend.onrender.com/api';
+const  BASE_URL = 'http://localhost:3000/api';
 
-export { BASE_URL };
+const DEV_URL = 'http://localhost:3000/api';
+
+export { BASE_URL ,DEV_URL};

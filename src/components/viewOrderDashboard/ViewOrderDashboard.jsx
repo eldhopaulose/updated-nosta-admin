@@ -73,20 +73,13 @@ const ViewOrdersDashboard = () => {
                                                     {order.items[0].productId[0].items.map(item => (
                                                         <span key={item.productId._id} onClick={() => handleProductClick(item.productId._id)} style={{ textDecoration: 'underline', cursor: 'pointer' }}>
                                                             {item.productId.name} (Quantity: {item.quantity})<br />
-
                                                         </span>
-
-
                                                     ))}
-
-
-
                                                 </td>
-
                                             </tr>
                                         ))}
                                     </tbody>
-                                </table>
+                                </table>    
                             </div>
                         </div>
                     </div>

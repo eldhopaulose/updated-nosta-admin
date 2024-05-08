@@ -51,13 +51,11 @@ const EditProductDashboard = () => {
                                 <table className="table table-borderless table-hover">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Product ID</th>
                                             <th scope="col">Preview</th>
                                             <th scope="col">Product</th>
                                             <th scope="col">Price</th>
                                             <th scope="col">Original Price</th>
                                             <th scope="col">Discount</th>
-                                            <th scope="col">Description</th>
                                             <th scope="col">Category</th>
                                             <th scope="col">Shipping Cost</th>
                                         </tr>
@@ -65,13 +63,11 @@ const EditProductDashboard = () => {
                                     <tbody>
                                         {products.map(product => (
                                             <tr key={product._id} onClick={() => handleRowClick(product._id)} className="table-hover" style={{ cursor: 'pointer' }}>
-                                                <td>{product._id}</td>
                                                 <td><img src={product.thumbnail} alt="product preview" /></td>
                                                 <td className="text-primary fw-bold">{product.name}</td>
                                                 <td>${product.price}</td>
                                                 <td>${product.originalPrice}</td>
                                                 <td>{product.discount}</td>
-                                                <td>{product.description}</td>
                                                 <td>{product.category.join(', ')}</td>
                                                 <td>${product.shippingCost}</td>
                                             </tr>

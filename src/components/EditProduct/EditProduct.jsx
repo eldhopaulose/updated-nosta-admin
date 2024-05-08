@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ImageKit from 'imagekit';
 import axios from 'axios';
-import { BASE_URL } from '../../constants/constants';
+import { BASE_URL, DEV_URL } from '../../constants/constants';
 
 
 const EditProduct = () => {
@@ -127,7 +127,7 @@ const EditProduct = () => {
                 originalPrice: formData.productOriginalPrice
             };
 
-            const response = await axios.patch(`${BASE_URL}/admin/product/updateProduct/${productId}`, formDataToSend, {
+            const response = await axios.patch(`${DEV_URL}/admin/product/updateProduct/${productId}`, formDataToSend, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -147,7 +147,10 @@ const EditProduct = () => {
         }
     };
 
-    const handleDeleteProduct = async () => {
+
+    const handleDeleteProduct = async (e) => {
+        e.preventDefault(); // Add this line to prevent default form submission
+    
         const confirmDelete = window.confirm("Are you sure you want to delete this product?");
         if (confirmDelete) {
             try {
@@ -159,6 +162,8 @@ const EditProduct = () => {
                 });
                 if (response.status === 200) {
                     navigate('/admindashboard');
+                    // Display success toast message only when deletion is confirmed and successful
+                    toast.success('Product deleted successfully');
                 } else {
                     console.error('Failed to delete product:', response.statusText);
                     toast.error('Failed to delete product. Please try again.');
@@ -167,10 +172,12 @@ const EditProduct = () => {
                 console.error('Error:', error);
                 toast.error('An error occurred. Please try again.');
             }
+        } else {
+            toast.error('Product deletion cancelled');
         }
     };
-
-
+    
+    
     return (
         <div className="add-products-container">
             <div className="container main section dashboard">
