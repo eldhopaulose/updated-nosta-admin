@@ -58,7 +58,7 @@ const ViewOrdersDashboard = () => {
                                             <th scope="col">Bill Date</th>
                                             <th scope="col">Address</th>
                                             <th scope="col">Phone Number</th>
-                                            <th scope="col">Product IDs</th>
+                                            <th scope="col">Product title</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -73,7 +73,10 @@ const ViewOrdersDashboard = () => {
                                                     {order.items[0].productId[0].items.map(item => (
                                                         <span key={item.productId._id} onClick={() => handleProductClick(item.productId._id)} style={{ textDecoration: 'underline', cursor: 'pointer' }}>
                                                             {item.productId.name} (Quantity: {item.quantity})<br />
+
                                                         </span>
+
+
                                                     ))}
 
 
