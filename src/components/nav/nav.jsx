@@ -164,12 +164,12 @@ function Nav() {
                 </li>
                 <li><hr className="dropdown-divider" /></li>
 
-                <li>
+                {/* <li>
                   <Link className="dropdown-item d-flex align-items-center" to="">
                     <i className="bi bi-person"></i>
                     <span>My Profile</span>
                   </Link>
-                </li>
+                </li> */}
 
                 <li><hr className="dropdown-divider" /></li>
 

@@ -34,7 +34,7 @@ const AdminDashboard = () => {
       <Nav />
       <div className="container w-140 main section dashboard mt-lg-5 mt-md-5 mt-5">
         <div className="row mt-lg-5 mt-md-5">
-          <div className="col-xxl-5 col-md-6 mt-lg-5 mt-md-5 mt-5">
+          <div className="col-xxl-4 col-md-6 mt-lg-5 mt-md-5 mt-5">
             <Link to="/addProducts" className="card-link">
               <div className="card info-card sales-card">
                 <div className="card-body">
@@ -45,7 +45,7 @@ const AdminDashboard = () => {
                     </div>
                     <div className="ps-3">
                       <h6>Add Products </h6>
-                      <span className="text-success small pt-1 fw-bold">click here</span>
+                      <button className="btn" style={{ fontSize: '14px', color: 'blue' }}>Click here</button>
                     </div>
                   </div>
                 </div>
@@ -53,7 +53,7 @@ const AdminDashboard = () => {
             </Link>
           </div>
 
-          <div className="col-xxl-5 col-md-6 mt-lg-5 mt-md-5">
+          <div className="col-xxl-4 col-md-6 mt-lg-5 mt-md-5">
             <Link to="/viewordersdashboard" className="card-link">
               <div className="card info-card revenue-card">
                 <div className="card-body">
@@ -64,7 +64,7 @@ const AdminDashboard = () => {
                     </div>
                     <div className="ps-3">
                       <h6>View Orders</h6>
-                      <span className="text-success small pt-1 fw-bold">click here</span> <span className="text-muted small pt-2 ps-1"></span>
+                      <button className="btn" style={{ fontSize: '14px', color: 'green' }}>Click here</button>
                     </div>
                   </div>
                 </div>
@@ -72,31 +72,27 @@ const AdminDashboard = () => {
             </Link>
           </div>
 
-          <div className="col-xxl-5 col-xl-12 mt-lg-5 mt-md-5">
-            <div className="card info-card customers-card">
-              <div className="card-body">
-                <div className="card-title"></div>
-                <div className="d-flex align-items-center">
-                  <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i className="bi bi-people"></i>
-                  </div>
-                  <div className="ps-3">
-                    <h6>Edit Products</h6>
-                    <button onClick={handleEditProducts} className="btn" style={{ fontSize: '14px', color: 'orange' }}>Click here</button>
+          <div className="col-xxl-4 col-xl-12 mt-lg-5 mt-md-5">
+            <Link to="/editProductdashboard" className="card-link">
+              <div className="card info-card customers-card">
+                <div className="card-body">
+                  <div className="card-title"></div>
+                  <div className="d-flex align-items-center">
+                    <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i className="bi bi-people"></i>
+                    </div>
+                    <div className="ps-3">
+                      <h6>Edit Products</h6>
+                      <button onClick={handleEditProducts} className="btn" style={{ fontSize: '14px', color: 'orange' }}>Click here</button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
-        </div>
-        <div className="col-12 col-lg-12">
-          <div className="card top-selling overflow-auto">
-            {/* Content for top selling products */}
-          </div>
+          <EditProductDashboard />
         </div>
       </div>
-
-      <EditProductDashboard />
     </>
   );
 };
