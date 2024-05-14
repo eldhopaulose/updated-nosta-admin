@@ -198,6 +198,7 @@ const AddProducts = () => {
                                             <option value="Curry powders">Curry powders</option>
                                             <option value="Spices">Spices</option>
                                             <option value="kerala Spices">Kerala Spices</option>
+                                            <option value="Kerala Special">Kerala Special</option>
                                         </select>
                                     </div>
                                     <div className="mb-3">
