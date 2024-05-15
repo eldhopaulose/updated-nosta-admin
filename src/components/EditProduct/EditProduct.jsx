@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import './editProduct.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ImageKit from 'imagekit';
 import axios from 'axios';
-import { BASE_URL, DEV_URL } from '../../constants/constants';
+import { BASE_URL } from '../../constants/constants';
 
 
 const EditProduct = () => {
@@ -127,7 +127,7 @@ const EditProduct = () => {
                 originalPrice: formData.productOriginalPrice
             };
 
-            const response = await axios.patch(`${DEV_URL}/admin/product/updateProduct/${productId}`, formDataToSend, {
+            const response = await axios.patch(`${BASE_URL}/admin/product/updateProduct/${productId}`, formDataToSend, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -150,7 +150,7 @@ const EditProduct = () => {
 
     const handleDeleteProduct = async (e) => {
         e.preventDefault(); // Add this line to prevent default form submission
-    
+
         const confirmDelete = window.confirm("Are you sure you want to delete this product?");
         if (confirmDelete) {
             try {
@@ -176,8 +176,8 @@ const EditProduct = () => {
             toast.error('Product deletion cancelled');
         }
     };
-    
-    
+
+
     return (
         <div className="add-products-container">
             <div className="container main section dashboard">
