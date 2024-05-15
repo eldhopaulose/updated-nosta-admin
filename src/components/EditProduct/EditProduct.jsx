@@ -109,11 +109,11 @@ const EditProduct = () => {
             toast.error('All fields must be filled.');
             return;
         }
-
+    
         const price = parseFloat(formData.productPrice);
         const discount = parseFloat(formData.productDiscount.replace('%', '')) / 100;
-        discountedPrice = (price - (price * discount)).toFixed(2);
-
+        const discountedPrice = (price - (price * discount)).toFixed(2); // Define discountedPrice here
+    
         try {
             const formDataToSend = {
                 name: formData.productName,
@@ -126,14 +126,14 @@ const EditProduct = () => {
                 images: selectedImages,
                 originalPrice: formData.productOriginalPrice
             };
-
+    
             const response = await axios.patch(`${BASE_URL}/admin/product/updateProduct/${productId}`, formDataToSend, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             });
-
+    
             if (response.status === 200) {
                 console.log('Product updated successfully');
                 toast.success('Product updated successfully');
@@ -145,7 +145,7 @@ const EditProduct = () => {
             console.error('Error:', error);
             toast.error('An error occurred. Please try again.');
         }
-    };
+    };    
 
 
     const handleDeleteProduct = async (e) => {
