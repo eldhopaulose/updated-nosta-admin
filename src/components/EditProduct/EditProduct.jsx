@@ -112,7 +112,7 @@ const EditProduct = () => {
 
         const price = parseFloat(formData.productPrice);
         const discount = parseFloat(formData.productDiscount.replace('%', '')) / 100;
-        const discountedPrice = (price - (price * discount)).toFixed(2);
+        discountedPrice = (price - (price * discount)).toFixed(2);
 
         try {
             const formDataToSend = {
@@ -127,7 +127,7 @@ const EditProduct = () => {
                 originalPrice: formData.productOriginalPrice
             };
 
-            const response = await axios.patch(`${DEV_URL}/admin/product/updateProduct/${productId}`, formDataToSend, {
+            const response = await axios.patch(`${BASE_URL}/admin/product/updateProduct/${productId}`, formDataToSend, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -202,7 +202,8 @@ const EditProduct = () => {
                                     <div className="mb-3">
                                         <label htmlFor="productDiscount" className="form-label">Discount</label>
                                         <select className="form-select" id="productDiscount" value={formData.productDiscount} onChange={handleChange}>
-                                            <option value="0%">No discount</option>
+                                            <option value="">No discount</option>
+                                            <option value="0%">0%</option>
                                             <option value="5%">5%</option>
                                             <option value="10%">10%</option>
                                             <option value="15%">15%</option>

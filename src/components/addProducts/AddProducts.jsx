@@ -87,10 +87,15 @@ const AddProducts = () => {
             return;
         }
 
-        const price = parseFloat(formData.productPrice);
-        const discount = parseFloat(formData.productDiscount.replace('%', '')) / 100;
-        const discountedPrice = (price - (price * discount)).toFixed(2);
-
+        let discountedPrice;
+        if (formData.productDiscount === '0%') {
+            // No discount selected, keep the original price
+            discountedPrice = parseFloat(formData.productPrice);
+        } else {
+            const price = parseFloat(formData.productPrice);
+            const discount = parseFloat(formData.productDiscount.replace('%', '')) / 100;
+            discountedPrice = (price - (price * discount)).toFixed(2);
+        }
 
         try {
             const formDataToSend = {
@@ -129,6 +134,7 @@ const AddProducts = () => {
         }
     };
 
+
     return (
         <div className="add-products-container">
             <div className="container main section dashboard">
@@ -153,7 +159,8 @@ const AddProducts = () => {
                                     <div className="mb-3">
                                         <label htmlFor="productDiscount" className="form-label">Discount</label>
                                         <select className="form-select" id="productDiscount" value={formData.productDiscount} onChange={handleChange}>
-                                            <option value="0%">No discount</option>
+                                            <option value="">Select Discount</option>
+                                            <option value="0%">0%</option>
                                             <option value="5%">5%</option>
                                             <option value="10%">10%</option>
                                             <option value="15%">15%</option>
